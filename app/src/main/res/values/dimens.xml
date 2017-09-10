@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--View size-->
+    <dimen name="viewPadding">6dp</dimen>
+
+    <!--Text Size-->
+
+    <dimen name="text_little">10sp</dimen>
+    <dimen name="text_normal">12sp</dimen>
+    <dimen name="text_big">14sp</dimen>
+</resources>
