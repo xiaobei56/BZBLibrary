@@ -1,6 +1,5 @@
-package cn.gridlife.bzblibrary;
+package cn.gridlife.bzblibrary.activity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +15,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.gridlife.bzblibrary.R;
+import cn.gridlife.bzblibrary.b_viewpager.ViewPagerShow;
 import cn.gridlife.bzblibrary.bean.MainListBean;
 import cn.gridlife.bzblibrary.a_baidulocation.BDLocationActivity;
 
@@ -52,17 +53,23 @@ MainActivity extends Activity {
         }
         listView.setAdapter(adapter);
         dataList = new ArrayList<>();
-        bean = new MainListBean();
-        bean.setId(1);
-        bean.setTitle("百度定位Demo");
-        bean.setContent("2017/9/7实现百度定位共功能");
-        dataList.add(bean);
+        addData(1,"百度定位Demo","2017/9/7实现百度定位共功能");
+        addData(2,"ViewPager展示","首页ViewPager展示信息");
 
         adapter.notifyDataSetChanged();
         listView.setOnItemClickListener(new ListViewItemClicked());
 
 
     }
+
+    private void addData(int id,String title,String content) {
+        bean = new MainListBean();
+        bean.setId(id);
+        bean.setTitle(title);//"百度定位Demo"
+        bean.setContent(content);//"2017/9/7实现百度定位共功能"
+        dataList.add(bean);
+    }
+
     class ListViewItemClicked implements AdapterView.OnItemClickListener{
 
         @Override
@@ -75,6 +82,9 @@ MainActivity extends Activity {
         {
             case 1:
             startActivity(new Intent(this,BDLocationActivity.class));
+            break;
+            case 2:
+                startActivity(new Intent(this, ViewPagerShow.class));
             break;
         }
     }

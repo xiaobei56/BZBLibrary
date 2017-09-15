@@ -2,18 +2,27 @@ package cn.gridlife.bzblibrary.a_baidulocation;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cn.gridlife.bzblibrary.R;
 import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 /**
@@ -36,13 +45,23 @@ public class BDLocationActivity extends Activity implements LocationHelper.Locat
         }
     };
 
-    @Override
+   @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_activity_main);
         initView();
+        showRationaleForCamera(new PermissionRequest() {
+            @Override
+            public void proceed() {
+                startAppSettings();
+            }
 
+            @Override
+            public void cancel() {
+                Toast.makeText(BDLocationActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
+            }
+        });
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,10 +92,10 @@ public class BDLocationActivity extends Activity implements LocationHelper.Locat
             // TODO Auto-generated method stub
             while (true) {
                 try {
-                    Thread.sleep(1000);// 线程暂停10秒，单位毫秒
+                    Thread.sleep(1000*60*10-1000);// 线程暂停10秒，单位毫秒
                     Message message = new Message();
                     message.what = 1;
-                    handler.sendEmptyMessageDelayed(message.what, 1000);// 发送消息
+                    handler.sendEmptyMessage(message.what);// 发送消息
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -122,7 +141,26 @@ public class BDLocationActivity extends Activity implements LocationHelper.Locat
         helper.setCallBack(this);
         helper.start();
     }
-
+    @OnShowRationale({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
+    public void showRationaleForCamera(final PermissionRequest request) {
+        new AlertDialog.Builder(this)
+                .setMessage("定位权限")
+                .setPositiveButton("yes", (dialog, button) -> request.proceed())
+                .setNegativeButton("no", (dialog, button) -> request.cancel())
+                .show();
+    }
+    /**
+     * 权限方案
+     */
+    public static final String PACKAGE_URL_SCHEME = "package:";
+    /**
+     * 打开系统应用设置(ACTION_APPLICATION_DETAILS_SETTINGS:系统设置权限)
+     */
+    public void startAppSettings() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse(PACKAGE_URL_SCHEME + getPackageName()));
+        startActivity(intent);
+    }
     private void initView() {
         btnLocation = (Button) findViewById(R.id.btn_getLocation);
         btnLocationTimer = (Button) findViewById(R.id.btn_location_timer);

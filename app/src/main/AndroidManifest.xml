@@ -30,7 +30,7 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="0MwNmw5seGykuExlNKermGDK0w9MdH0p" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,6 +38,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".a_baidulocation.BDLocationActivity"/>
+        <activity android:name=".b_viewpager.ViewPagerShow"/>
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
     </application>
