@@ -27,7 +27,6 @@ import cn.gridlife.bzblibrary.b_viewpager.bean.ViewPagerDataBean;
 /**
  * Created by BZB on 2017/9/14.
  */
-
 public class ViewPagerShow extends Activity {
 
     private ViewPager viewPager;
@@ -92,6 +91,7 @@ public class ViewPagerShow extends Activity {
             @Override
             public void onPageSelected(int position) {
                 setImageBackground(position % mImageViews.length);
+                setShowTile(position % mImageViews.length);
             }
 
             @Override
@@ -179,6 +179,25 @@ public class ViewPagerShow extends Activity {
         public void destroyItem(ViewGroup container, int position, Object object) {
 
             ((ViewPager)container).removeView(mImageViews[position % mImageViews.length]);
+        }
+    }
+    private void setShowTile(int selectItems){
+        switch (selectItems){
+            case 0:
+                tvShow.setText("0");
+                break;
+            case 1:
+                tvShow.setText("first");
+                break;
+            case 2:
+                tvShow.setText("two");
+                break;
+            case 3:
+                tvShow.setText("three");
+                break;
+            case 4:
+                tvShow.setText("four");
+                break;
         }
     }
     /**

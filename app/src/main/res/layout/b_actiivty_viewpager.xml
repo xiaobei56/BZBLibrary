@@ -14,7 +14,7 @@
         android:layout_height="30dp"
         android:layout_alignBaseline="@id/vp_show"
         android:layout_alignBottom="@id/vp_show"
-        android:background="#5666"
+        android:background="#8888"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -23,6 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
+            android:textColor="@color/white"
             android:text="test" />
 
         <LinearLayout

@@ -6,10 +6,10 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "cn.gridlife.bzblibrary"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -53,10 +53,11 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.0.1'
     implementation 'com.android.support:cardview-v7:26.0.1'
     implementation files('libs/BaiduLBS_Android.jar')
-    compile("com.github.hotchemi:permissionsdispatcher:2.4.0") {
+    compile('com.github.hotchemi:permissionsdispatcher:2.4.0') {
         // if you don't use android.app.Fragment you can exclude support for them
         exclude module: "support-v13"
     }
-
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:2.4.0"
+    implementation project(':ImgWebView')
+    implementation files('libs/AISpeech-SDK-for-Android-2.1.1.jar')
 }

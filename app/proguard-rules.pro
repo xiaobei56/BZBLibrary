@@ -19,3 +19,15 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keepattributes EnclosingMethod
+-keepattributes InnerClasses
+#keep callback method
+-keepclassmembers class * implements com.aispeech.AIEngine$aiengine_callback{public int run(byte[] , int , byte[] , int);}
+-keepnames class com.aispeech.AIEngine$*{
+public <fields>;
+public <methods>;
+}
+#keep native method
+-keepclassmembers class com.aispeech.AIEngine{
+public static native <methods>;
+}

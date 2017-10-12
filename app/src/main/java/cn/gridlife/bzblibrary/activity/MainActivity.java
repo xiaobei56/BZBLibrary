@@ -19,6 +19,8 @@ import cn.gridlife.bzblibrary.R;
 import cn.gridlife.bzblibrary.b_viewpager.ViewPagerShow;
 import cn.gridlife.bzblibrary.bean.MainListBean;
 import cn.gridlife.bzblibrary.a_baidulocation.BDLocationActivity;
+import cn.gridlife.bzblibrary.c_function.FunctionActivity;
+import cn.gridlife.bzblibrary.d_voice_to_text.VoiceToTextActivity;
 
 /**
  * Created by BZB on 2017/9/7.
@@ -53,16 +55,20 @@ MainActivity extends Activity {
         }
         listView.setAdapter(adapter);
         dataList = new ArrayList<>();
-        addData(1,"百度定位Demo","2017/9/7实现百度定位共功能");
-        addData(2,"ViewPager展示","首页ViewPager展示信息");
-
+        ///////////////////////////////////////////////////////////////////////////
+        // 增加条目
+        ///////////////////////////////////////////////////////////////////////////
+        addData(1, "百度定位Demo", "2017/9/7实现百度定位共功能");
+        addData(2, "ViewPager展示", "首页ViewPager展示信息");
+        addData(3, "函数", "哥哥");
+        addData(4,"语音转文字","基于思必驰语音sdk开发");
         adapter.notifyDataSetChanged();
         listView.setOnItemClickListener(new ListViewItemClicked());
 
 
     }
 
-    private void addData(int id,String title,String content) {
+    private void addData(int id, String title, String content) {
         bean = new MainListBean();
         bean.setId(id);
         bean.setTitle(title);//"百度定位Demo"
@@ -70,29 +76,38 @@ MainActivity extends Activity {
         dataList.add(bean);
     }
 
-    class ListViewItemClicked implements AdapterView.OnItemClickListener{
+    class ListViewItemClicked implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             startAC(dataList.get(i).getId());
         }
     }
-    private void startAC(int id){
-        switch (id)
-        {
+
+    private void startAC(int id) {
+        switch (id) {
+            ///////////////////////////////////////////////////////////////////////////
+            // 设置点击事件
+            ///////////////////////////////////////////////////////////////////////////
             case 1:
-            startActivity(new Intent(this,BDLocationActivity.class));
-            break;
+                startActivity(new Intent(this, BDLocationActivity.class));
+                break;
             case 2:
                 startActivity(new Intent(this, ViewPagerShow.class));
-            break;
+                break;
+            case 3:
+                startActivity(new Intent(this, FunctionActivity.class));
+                break;
+            case 4:
+                startActivity(new Intent(this, VoiceToTextActivity.class));
         }
     }
+
     class MainListAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            if(dataList==null||dataList.isEmpty()){
+            if (dataList == null || dataList.isEmpty()) {
                 return 0;
             }
             return dataList.size();
@@ -111,14 +126,14 @@ MainActivity extends Activity {
         @Override
         public View getView(int position, View convertView, ViewGroup viewGroup) {
             ViewHolder holder;
-            if(convertView==null){
-                holder=new ViewHolder();
-                convertView= LayoutInflater.from(MainActivity.this).inflate(R.layout.activity_main_item,null,true);
-                holder.tvTitle=convertView.findViewById(R.id.tv_title);
-                holder.tvContent=convertView.findViewById(R.id.tv_content);
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = LayoutInflater.from(MainActivity.this).inflate(R.layout.activity_main_item, null, true);
+                holder.tvTitle = convertView.findViewById(R.id.tv_title);
+                holder.tvContent = convertView.findViewById(R.id.tv_content);
                 convertView.setTag(holder);
-            }else {
-                holder= (ViewHolder) convertView.getTag();
+            } else {
+                holder = (ViewHolder) convertView.getTag();
             }
             holder.tvTitle.setText(dataList.get(position).getTitle());
             holder.tvContent.setText(dataList.get(position).getContent());
@@ -126,7 +141,8 @@ MainActivity extends Activity {
             return convertView;
         }
     }
-    class ViewHolder{
+
+    class ViewHolder {
         TextView tvTitle;
         TextView tvContent;
     }
